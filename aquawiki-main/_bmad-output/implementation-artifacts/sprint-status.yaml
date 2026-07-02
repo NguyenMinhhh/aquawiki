@@ -1,0 +1,86 @@
+# generated: 06-24-2026
+# project: aquawiki
+# project_key: AQUA
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+#   Epic:  backlog | in-progress | done
+#   Story: backlog | ready-for-dev | in-progress | review | done
+
+generated: 06-24-2026
+last_updated: 06-24-2026
+project: aquawiki
+project_key: AQUA
+tracking_system: file-system
+story_location: "_bmad-output/implementation-artifacts"
+
+development_status:
+  # ── Epic 1: Project Foundation & User Authentication (implemented) ──
+  epic-1: done
+  1-1-project-initialization: done
+  1-2-user-registration: done
+  1-3-user-login-session: done
+  1-4-role-based-access-control: done
+  epic-1-retrospective: optional
+
+  # ── Epic 2: Species Encyclopedia (implemented) ──
+  epic-2: done
+  2-1-species-database-schema: done
+  2-2-species-list-search-api: done
+  2-3-species-filter-api: done
+  2-4-species-detail-api: done
+  2-5-frontend-species-list-page: done
+  2-6-frontend-species-detail-page: done
+  2-7-flag-species-inaccurate: done
+  epic-2-retrospective: optional
+
+  # ── Epic 3: Tank Simulator (implemented) ──
+  epic-3: done
+  3-1-tank-dimension-volume-calculation: done
+  3-2-add-remove-species-simulator: done
+  3-3-bioload-calculation-display: done
+  3-4-2d-tank-visualization: done
+  epic-3-retrospective: optional
+
+  # ── Epic 4: Compatibility Engine (implemented) ──
+  epic-4: done
+  4-1-compatibility-data-foundation: done
+  4-2-compatibility-rule-engine: done
+  4-3-compatibility-check-api: done
+  4-4-real-time-compatibility-warnings: done
+  epic-4-retrospective: optional
+
+  # ── Epic 5: Admin & Content Management (implemented) ──
+  epic-5: done
+  5-1-admin-species-create-edit: done
+  5-2-admin-species-list-delete-approval: done
+  5-3-species-image-upload: done
+  5-4-compatibility-exception-management: done
+  5-5-review-flagged-species: done
+  epic-5-retrospective: optional
+
+  # ── Epic 6: Personal Tanks & Water Change Reminders (NEW — 2026-06-24) ──
+  # Implemented 2026-06-24: backend (V7/V8 migrations, Tank/TankMaintenanceLog,
+  # TankService, Tank/Reminder controllers) + frontend (MyTanks, TankForm).
+  # Backend compiles (Java 21) + full test suite green. Status 'review' = pending E2E verify.
+  epic-6: in-progress
+  6-1-tank-persistence-schema: review
+  6-2-tank-crud-api: review
+  6-3-water-change-schedule: review
+  6-4-reminder-api-mark-done: review
+  6-5-frontend-my-tanks-list: review
+  6-6-frontend-tank-form: review
+  epic-6-retrospective: optional
+
+  # ── Epic 7: AI Fish Identification (NEW — 2026-06-24) ──
+  # Implemented 2026-06-24: SpeciesRecognitionService + FishialRecognitionService,
+  # /api/identify endpoint, frontend IdentifyPage. Compiles + tests green.
+  # OPEN: confirm Fishial live response schema + API key before enabling (503 until then).
+  epic-7: in-progress
+  7-0-research-provider-spike: done   # Fishial.AI selected; see research artifact
+  7-1-species-recognition-service-fishial: review
+  7-2-identify-endpoint: review
+  7-3-frontend-identify-upload: review
+  7-4-frontend-identify-result: review
+  epic-7-retrospective: optional

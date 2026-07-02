@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaWiki — Design Direction Mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --c-primary: oklch(48% 0.17 222);
+    --c-primary-light: oklch(92% 0.06 222);
+    --c-success: oklch(52% 0.17 145);
+    --c-success-light: oklch(94% 0.06 145);
+    --c-warning: oklch(62% 0.16 75);
+    --c-warning-light: oklch(95% 0.06 75);
+    --c-danger: oklch(50% 0.20 25);
+    --c-danger-light: oklch(95% 0.05 25);
+    --c-bg: oklch(98% 0.005 222);
+    --c-surface: #fff;
+    --c-border: oklch(88% 0.01 222);
+    --c-text: oklch(18% 0.01 222);
+    --c-text-2: oklch(45% 0.02 222);
+    --c-text-3: oklch(70% 0.01 222);
+    font-family: 'Be Vietnam Pro', 'Inter', system-ui, sans-serif;
+  }
+
+  /* ── Shell ── */
+  body { background: #111827; color: var(--c-text); min-height: 100vh; }
+
+  .shell-header {
+    background: #1f2937;
+    padding: 16px 24px;
+    border-bottom: 1px solid #374151;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .shell-title { color: #f9fafb; font-weight: 700; font-size: 18px; }
+  .shell-sub { color: #9ca3af; font-size: 13px; margin-top: 2px; }
+
+  .dir-tabs {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .dir-tab {
+    padding: 6px 14px; border-radius: 6px; border: 1px solid #374151;
+    background: transparent; color: #9ca3af; font-size: 13px; font-weight: 500;
+    cursor: pointer; font-family: inherit; transition: all 0.2s;
+  }
+  .dir-tab:hover { border-color: #6b7280; color: #e5e7eb; }
+  .dir-tab.active { background: var(--c-primary); border-color: var(--c-primary); color: #fff; }
+
+  .directions-container { padding: 24px; }
+  .direction { display: none; }
+  .direction.active { display: block; }
+
+  .dir-label {
+    color: #9ca3af; font-size: 13px; font-weight: 500; margin-bottom: 12px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  /* State toggle */
+  .state-toggle {
+    display: flex; gap: 8px; margin-bottom: 20px; align-items: center;
+  }
+  .state-btn {
+    padding: 6px 16px; border-radius: 20px; border: 1.5px solid #374151;
+    background: transparent; color: #9ca3af; font-size: 13px; font-weight: 500;
+    cursor: pointer; font-family: inherit; transition: all 0.2s;
+  }
+  .state-btn.active-green { background: #0f2a1a; border-color: var(--c-success); color: #4ade80; }
+  .state-btn.active-red { background: #2a0f0f; border-color: var(--c-danger); color: #f87171; }
+  .state-label { color: #6b7280; font-size: 13px; }
+
+  /* ── DIRECTION 1: Aqua Clean ── */
+  .d1 { background: var(--c-bg); min-height: 600px; border-radius: 16px; overflow: hidden; border: 1px solid var(--c-border); }
+  .d1-nav {
+    background: var(--c-surface); border-bottom: 1px solid var(--c-border);
+    height: 64px; display: flex; align-items: center; padding: 0 24px;
+    justify-content: space-between;
+  }
+  .d1-logo { font-weight: 700; font-size: 18px; color: var(--c-primary); display: flex; align-items: center; gap: 8px; }
+  .d1-logo-icon { font-size: 22px; }
+  .d1-navlinks { display: flex; gap: 24px; }
+  .d1-navlink { color: var(--c-text-2); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; }
+  .d1-navlink.active-nav { color: var(--c-primary); border-bottom: 2px solid var(--c-primary); padding-bottom: 2px; }
+  .d1-body { display: flex; gap: 0; min-height: 536px; }
+  .d1-left { width: 420px; padding: 24px; border-right: 1px solid var(--c-border); display: flex; flex-direction: column; gap: 20px; }
+  .d1-right { flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+
+  .section-title { font-size: 13px; font-weight: 600; color: var(--c-text-2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .dim-row { display: flex; gap: 8px; }
+  .dim-group { flex: 1; }
+  .dim-label { font-size: 12px; color: var(--c-text-2); margin-bottom: 4px; }
+  .dim-input {
+    width: 100%; padding: 8px 10px; border: 1.5px solid var(--c-border);
+    border-radius: 8px; font-size: 14px; font-family: inherit;
+    background: var(--c-surface); color: var(--c-text);
+  }
+  .dim-result { font-size: 13px; color: var(--c-text-2); margin-top: 6px; }
+  .dim-result strong { color: var(--c-primary); font-weight: 600; }
+
+  .search-box {
+    display: flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--c-border); border-radius: 10px;
+    padding: 10px 12px; background: var(--c-surface);
+  }
+  .search-icon { color: var(--c-text-3); font-size: 16px; }
+  .search-input { border: none; outline: none; font-size: 14px; font-family: inherit; color: var(--c-text); background: transparent; flex: 1; }
+  .search-input::placeholder { color: var(--c-text-3); }
+
+  .species-list { display: flex; flex-direction: column; gap: 8px; }
+  .species-card {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; background: var(--c-surface);
+    border: 1.5px solid var(--c-border); border-radius: 10px;
+  }
+  .species-icon { font-size: 22px; }
+  .species-info { flex: 1; }
+  .species-name { font-size: 14px; font-weight: 600; color: var(--c-text); }
+  .species-sci { font-size: 12px; color: var(--c-text-2); font-style: italic; }
+  .behavior-chip {
+    font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px;
+  }
+  .chip-aggressive { background: oklch(93% 0.05 25); color: oklch(40% 0.18 25); }
+  .chip-peaceful { background: oklch(94% 0.05 145); color: oklch(38% 0.15 145); }
+  .chip-semi { background: oklch(95% 0.05 75); color: oklch(45% 0.15 75); }
+  .remove-btn {
+    width: 24px; height: 24px; border-radius: 50%; border: none;
+    background: oklch(92% 0.01 0); color: var(--c-text-2);
+    cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;
+    font-family: inherit;
+  }
+
+  .tank-canvas {
+    border-radius: 12px; border: 4px solid var(--c-success);
+    background: linear-gradient(180deg, oklch(94% 0.04 222) 0%, oklch(90% 0.06 222) 100%);
+    aspect-ratio: 4/3; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+    transition: border-color 0.3s ease;
+    position: relative; overflow: hidden; padding: 16px;
+  }
+  .tank-canvas.conflict { border-color: var(--c-danger); }
+  .tank-canvas.warning-state { border-color: var(--c-warning); }
+  .tank-icons { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .tank-fish { font-size: 32px; }
+  .tank-empty-text { color: var(--c-text-3); font-size: 14px; text-align: center; }
+
+  .bioload-section { }
+  .bioload-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .bioload-label { font-size: 13px; font-weight: 500; color: var(--c-text-2); }
+  .bioload-pct { font-size: 13px; font-weight: 600; color: var(--c-text); }
+  .bioload-bar { height: 8px; border-radius: 4px; background: var(--c-border); overflow: hidden; }
+  .bioload-fill { height: 100%; border-radius: 4px; background: var(--c-success); transition: width 0.3s, background 0.3s; }
+  .bioload-fill.high { background: var(--c-warning); }
+
+  .compat-panel { border: 1.5px solid var(--c-border); border-radius: 12px; overflow: hidden; flex: 1; }
+  .compat-panel-header { padding: 12px 16px; background: var(--c-surface); border-bottom: 1px solid var(--c-border); font-size: 13px; font-weight: 600; color: var(--c-text-2); display: flex; align-items: center; gap: 6px; }
+  .compat-panel-body { padding: 12px 16px; }
+  .compat-ok { display: flex; align-items: center; gap: 8px; color: var(--c-success); font-size: 14px; font-weight: 500; }
+  .warning-card {
+    border-radius: 8px; padding: 12px 14px; margin-bottom: 8px;
+    border-left: 4px solid var(--c-danger);
+    background: var(--c-danger-light);
+  }
+  .warning-card.medium {
+    border-left-color: var(--c-warning);
+    background: var(--c-warning-light);
+  }
+  .warning-severity { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .warning-severity.high { color: var(--c-danger); }
+  .warning-severity.medium { color: var(--c-warning); }
+  .warning-pair { font-size: 13px; font-weight: 600; color: var(--c-text); margin: 3px 0; }
+  .warning-reason { font-size: 12px; color: var(--c-text-2); line-height: 1.5; }
+
+  /* ── DIRECTION 2: Card Gallery ── */
+  .d2 { background: #f8faff; min-height: 600px; border-radius: 16px; overflow: hidden; border: 1px solid #dce6f5; }
+  .d2-nav {
+    background: var(--c-primary); height: 64px; display: flex; align-items: center;
+    padding: 0 24px; justify-content: space-between;
+  }
+  .d2-logo { color: #fff; font-weight: 700; font-size: 20px; }
+  .d2-navlinks { display: flex; gap: 20px; }
+  .d2-navlink { color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; }
+  .d2-navlink.active-nav { color: #fff; background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 8px; }
+  .d2-body { display: grid; grid-template-columns: 1fr 380px; min-height: 536px; }
+  .d2-main { padding: 24px; }
+  .d2-sidebar { padding: 24px; background: #fff; border-left: 1px solid #dce6f5; display: flex; flex-direction: column; gap: 16px; }
+  .d2-page-title { font-size: 22px; font-weight: 700; color: var(--c-text); margin-bottom: 4px; }
+  .d2-page-sub { font-size: 14px; color: var(--c-text-2); margin-bottom: 20px; }
+  .d2-dim-card { background: #fff; border: 1px solid #dce6f5; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .d2-dim-row { display: flex; gap: 12px; }
+  .d2-dim-item { flex: 1; }
+  .d2-dim-label { font-size: 12px; color: var(--c-text-2); font-weight: 500; margin-bottom: 4px; }
+  .d2-dim-val { font-size: 20px; font-weight: 700; color: var(--c-primary); }
+  .d2-dim-unit { font-size: 12px; color: var(--c-text-2); }
+  .d2-vol { font-size: 13px; color: var(--c-text-2); margin-top: 10px; padding-top: 10px; border-top: 1px solid #dce6f5; }
+  .d2-vol strong { color: var(--c-primary); }
+  .d2-species-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .d2-species-card {
+    background: #fff; border: 1.5px solid #dce6f5; border-radius: 12px;
+    padding: 16px 12px; text-align: center; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .d2-species-card:hover { border-color: var(--c-primary); box-shadow: 0 4px 12px rgba(0,80,180,0.1); }
+  .d2-species-card.in-tank { border-color: var(--c-primary); background: var(--c-primary-light); }
+  .d2-fish-icon { font-size: 36px; margin-bottom: 8px; }
+  .d2-fish-name { font-size: 13px; font-weight: 600; color: var(--c-text); }
+  .d2-fish-chip { margin-top: 6px; display: inline-block; }
+  .d2-tank-visual {
+    border: 4px solid var(--c-success); border-radius: 12px;
+    background: linear-gradient(180deg, #e8f4fc 0%, #c8e8f8 100%);
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    font-size: 36px; gap: 8px; flex-wrap: wrap; padding: 12px;
+    transition: border-color 0.3s;
+  }
+  .d2-tank-visual.conflict { border-color: var(--c-danger); background: linear-gradient(180deg, #fdecea 0%, #fbd5d2 100%); }
+
+  /* ── DIRECTION 3: Pro Dashboard ── */
+  .d3 { background: #0f172a; min-height: 600px; border-radius: 16px; overflow: hidden; border: 1px solid #1e293b; color: #e2e8f0; }
+  .d3-nav {
+    background: #0f172a; border-bottom: 1px solid #1e293b; height: 60px;
+    display: flex; align-items: center; padding: 0 24px; justify-content: space-between;
+  }
+  .d3-logo { color: #38bdf8; font-weight: 800; font-size: 18px; }
+  .d3-navlinks { display: flex; gap: 20px; }
+  .d3-navlink { color: #64748b; font-size: 13px; font-weight: 500; }
+  .d3-navlink.active-nav { color: #38bdf8; }
+  .d3-body { display: grid; grid-template-columns: 240px 1fr 280px; min-height: 540px; }
+  .d3-sidebar { padding: 16px; border-right: 1px solid #1e293b; display: flex; flex-direction: column; gap: 12px; }
+  .d3-sidebar-title { font-size: 11px; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .d3-input-group { }
+  .d3-input-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .d3-input {
+    width: 100%; padding: 7px 10px; background: #1e293b; border: 1px solid #334155;
+    border-radius: 6px; color: #e2e8f0; font-size: 13px; font-family: inherit;
+  }
+  .d3-stat-row { display: flex; gap: 8px; }
+  .d3-stat { flex: 1; background: #1e293b; border-radius: 8px; padding: 10px; border: 1px solid #334155; }
+  .d3-stat-val { font-size: 20px; font-weight: 700; color: #38bdf8; }
+  .d3-stat-label { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .d3-main { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .d3-tank {
+    border: 3px solid #22c55e; border-radius: 10px;
+    background: linear-gradient(180deg, #082032 0%, #0a2a44 100%);
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 12px; padding: 16px; transition: border-color 0.3s;
+  }
+  .d3-tank.conflict { border-color: #ef4444; background: linear-gradient(180deg, #2a0808 0%, #3d0f0f 100%); }
+  .d3-tank-fish { font-size: 36px; filter: drop-shadow(0 0 8px rgba(56,189,248,0.4)); }
+  .d3-tank.conflict .d3-tank-fish { filter: drop-shadow(0 0 8px rgba(239,68,68,0.5)); }
+  .d3-bioload { }
+  .d3-bioload-label { font-size: 12px; color: #64748b; margin-bottom: 4px; display: flex; justify-content: space-between; }
+  .d3-bioload-bar { height: 6px; background: #1e293b; border-radius: 3px; overflow: hidden; }
+  .d3-bioload-fill { height: 100%; border-radius: 3px; background: #22c55e; width: 23%; transition: all 0.3s; }
+  .d3-bioload-fill.high { background: #f59e0b; width: 72%; }
+  .d3-right { padding: 16px; border-left: 1px solid #1e293b; display: flex; flex-direction: column; gap: 10px; }
+  .d3-panel-title { font-size: 12px; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+  .d3-search {
+    display: flex; align-items: center; gap: 6px; background: #1e293b;
+    border: 1px solid #334155; border-radius: 6px; padding: 7px 10px;
+  }
+  .d3-search input { background: transparent; border: none; outline: none; color: #e2e8f0; font-size: 13px; font-family: inherit; flex: 1; }
+  .d3-species-list { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .d3-species-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px; background: #1e293b; border-radius: 6px;
+    border: 1px solid #334155;
+  }
+  .d3-species-name { font-size: 13px; font-weight: 500; color: #e2e8f0; flex: 1; }
+  .d3-remove { color: #475569; font-size: 16px; cursor: pointer; background: none; border: none; color: #64748b; font-family: inherit; }
+  .d3-compat-section { }
+  .d3-compat-ok { color: #22c55e; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+  .d3-warning {
+    background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 6px; padding: 10px 12px; margin-bottom: 6px;
+  }
+  .d3-warning-title { font-size: 12px; font-weight: 700; color: #f87171; margin-bottom: 4px; }
+  .d3-warning-text { font-size: 12px; color: #94a3b8; line-height: 1.5; }
+
+  /* ── DIRECTION 4: Warm Earth ── */
+  .d4 { background: #faf6f1; min-height: 600px; border-radius: 16px; overflow: hidden; border: 1px solid #e8ddd0; }
+  .d4-nav {
+    background: #fff; border-bottom: 1px solid #e8ddd0; height: 64px;
+    display: flex; align-items: center; padding: 0 24px; justify-content: space-between;
+  }
+  .d4-logo { font-weight: 800; font-size: 20px; color: #2d6a4f; }
+  .d4-navlinks { display: flex; gap: 24px; }
+  .d4-navlink { color: #6b7280; font-size: 14px; font-weight: 500; }
+  .d4-navlink.active-nav { color: #2d6a4f; border-bottom: 2px solid #2d6a4f; padding-bottom: 2px; }
+  .d4-body { display: flex; gap: 0; min-height: 536px; }
+  .d4-left { width: 380px; padding: 24px; border-right: 1px solid #e8ddd0; display: flex; flex-direction: column; gap: 20px; }
+  .d4-right { flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+  .d4-page-title { font-size: 22px; font-weight: 700; color: #1c1917; }
+  .d4-section-label { font-size: 12px; font-weight: 600; color: #78716c; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .d4-dim-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .d4-dim-box { }
+  .d4-dim-label { font-size: 12px; color: #78716c; margin-bottom: 4px; }
+  .d4-dim-input {
+    width: 100%; padding: 8px 10px; border: 1.5px solid #e8ddd0; border-radius: 8px;
+    font-size: 14px; font-family: inherit; background: #fff; color: #1c1917;
+  }
+  .d4-search-wrap { position: relative; }
+  .d4-search {
+    width: 100%; padding: 10px 14px 10px 36px; border: 1.5px solid #e8ddd0;
+    border-radius: 10px; font-size: 14px; font-family: inherit; background: #fff; color: #1c1917;
+  }
+  .d4-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+  .d4-species-list { display: flex; flex-direction: column; gap: 8px; }
+  .d4-species-card {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1.5px solid #e8ddd0; border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .d4-fish { font-size: 24px; }
+  .d4-fish-info { flex: 1; }
+  .d4-fish-name { font-size: 14px; font-weight: 600; color: #1c1917; }
+  .d4-fish-sci { font-size: 12px; color: #78716c; font-style: italic; }
+  .d4-tank {
+    border: 4px solid #2d6a4f; border-radius: 14px;
+    background: linear-gradient(180deg, #d8f3dc 0%, #b7e4c7 100%);
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 10px; padding: 16px; transition: border-color 0.3s;
+  }
+  .d4-tank.conflict { border-color: #c0392b; background: linear-gradient(180deg, #fdecea 0%, #fbd5d2 100%); }
+  .d4-tank-fish { font-size: 34px; }
+  .d4-bioload-bar { height: 8px; border-radius: 4px; background: #e8ddd0; overflow: hidden; margin-top: 4px; }
+  .d4-bioload-fill { height: 100%; border-radius: 4px; background: #2d6a4f; width: 23%; }
+  .d4-compat-panel { background: #fff; border: 1.5px solid #e8ddd0; border-radius: 12px; padding: 16px; flex: 1; }
+  .d4-compat-ok { color: #2d6a4f; font-size: 14px; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+  .d4-warning {
+    border-left: 4px solid #c0392b; background: #fdecea; border-radius: 0 8px 8px 0;
+    padding: 10px 12px; margin-bottom: 8px;
+  }
+  .d4-warning-title { font-size: 11px; font-weight: 700; color: #c0392b; text-transform: uppercase; letter-spacing: 0.06em; }
+  .d4-warning-pair { font-size: 13px; font-weight: 600; color: #1c1917; margin: 2px 0; }
+  .d4-warning-reason { font-size: 12px; color: #78716c; line-height: 1.5; }
+
+  /* ── DIRECTION 5: Mobile Native ── */
+  .d5-wrapper { display: flex; justify-content: center; }
+  .d5 {
+    background: var(--c-bg); width: 375px; min-height: 680px; border-radius: 40px;
+    overflow: hidden; border: 8px solid #1f2937; box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    display: flex; flex-direction: column;
+  }
+  .d5-nav {
+    background: var(--c-surface); border-bottom: 1px solid var(--c-border);
+    height: 56px; display: flex; align-items: center; padding: 0 16px;
+    justify-content: space-between;
+  }
+  .d5-logo { font-weight: 700; font-size: 17px; color: var(--c-primary); }
+  .d5-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .d5-section { background: var(--c-surface); border-radius: 12px; padding: 14px; border: 1px solid var(--c-border); }
+  .d5-section-title { font-size: 13px; font-weight: 600; color: var(--c-text-2); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .d5-dim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .d5-dim-item { }
+  .d5-dim-label { font-size: 11px; color: var(--c-text-2); margin-bottom: 3px; }
+  .d5-dim-input {
+    width: 100%; padding: 10px; border: 1.5px solid var(--c-border); border-radius: 8px;
+    font-size: 16px; font-family: inherit; background: var(--c-bg); color: var(--c-text);
+  }
+  .d5-tank {
+    border: 4px solid var(--c-success); border-radius: 12px;
+    background: linear-gradient(180deg, oklch(94% 0.04 222) 0%, oklch(88% 0.07 222) 100%);
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 8px; padding: 12px; transition: border-color 0.3s;
+  }
+  .d5-tank.conflict { border-color: var(--c-danger); }
+  .d5-tank-fish { font-size: 30px; }
+  .d5-bioload { display: flex; align-items: center; gap: 10px; }
+  .d5-bioload-bar { flex: 1; height: 8px; background: var(--c-border); border-radius: 4px; overflow: hidden; }
+  .d5-bioload-fill { height: 100%; border-radius: 4px; background: var(--c-success); width: 23%; }
+  .d5-bioload-pct { font-size: 12px; font-weight: 600; color: var(--c-text); min-width: 36px; text-align: right; }
+  .d5-search {
+    display: flex; align-items: center; gap: 8px; background: var(--c-bg);
+    border: 1.5px solid var(--c-border); border-radius: 10px; padding: 12px;
+  }
+  .d5-search input { border: none; outline: none; font-size: 16px; font-family: inherit; color: var(--c-text); background: transparent; flex: 1; }
+  .d5-species-list { display: flex; flex-direction: column; gap: 8px; }
+  .d5-species-card {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px; background: var(--c-bg); border: 1.5px solid var(--c-border); border-radius: 10px;
+  }
+  .d5-fish { font-size: 26px; }
+  .d5-fish-name { font-size: 14px; font-weight: 600; color: var(--c-text); flex: 1; }
+  .d5-compat-empty { color: var(--c-success); font-size: 14px; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+  .d5-warning {
+    background: var(--c-danger-light); border-left: 4px solid var(--c-danger);
+    border-radius: 0 8px 8px 0; padding: 10px 12px; margin-bottom: 8px;
+  }
+  .d5-warning-badge { font-size: 11px; font-weight: 700; color: var(--c-danger); text-transform: uppercase; }
+  .d5-warning-pair { font-size: 13px; font-weight: 600; color: var(--c-text); margin: 2px 0; }
+  .d5-warning-reason { font-size: 12px; color: var(--c-text-2); line-height: 1.5; }
+
+  /* ── DIRECTION 6: Split Panel ── */
+  .d6 { background: #fff; min-height: 600px; border-radius: 16px; overflow: hidden; border: 1px solid #e5e7eb; }
+  .d6-nav {
+    background: #111827; height: 64px; display: flex; align-items: center;
+    padding: 0 24px; justify-content: space-between;
+  }
+  .d6-logo { color: #60a5fa; font-weight: 800; font-size: 20px; }
+  .d6-navlinks { display: flex; gap: 20px; }
+  .d6-navlink { color: #6b7280; font-size: 14px; font-weight: 500; }
+  .d6-navlink.active-nav { color: #fff; }
+  .d6-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 536px; }
+  .d6-panel-l { padding: 24px; border-right: 1px solid #e5e7eb; display: flex; flex-direction: column; gap: 16px; }
+  .d6-panel-r { padding: 24px; background: #f8faff; display: flex; flex-direction: column; gap: 16px; }
+  .d6-panel-title { font-size: 16px; font-weight: 700; color: #111827; border-bottom: 2px solid #60a5fa; padding-bottom: 8px; margin-bottom: 4px; }
+  .d6-dim-row { display: flex; gap: 8px; }
+  .d6-dim-item { flex: 1; }
+  .d6-dim-label { font-size: 11px; color: #6b7280; margin-bottom: 4px; font-weight: 500; }
+  .d6-dim-input {
+    width: 100%; padding: 8px 10px; border: 1.5px solid #d1d5db; border-radius: 6px;
+    font-size: 14px; font-family: inherit; color: #111827;
+  }
+  .d6-vol { font-size: 12px; color: #6b7280; margin-top: 4px; }
+  .d6-vol strong { color: #60a5fa; }
+  .d6-search {
+    display: flex; align-items: center; gap: 8px; border: 1.5px solid #d1d5db;
+    border-radius: 8px; padding: 9px 12px; background: #fff;
+  }
+  .d6-search input { border: none; outline: none; font-size: 14px; font-family: inherit; flex: 1; color: #111827; }
+  .d6-species-list { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .d6-species-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff;
+  }
+  .d6-fish { font-size: 20px; }
+  .d6-fish-name { font-size: 13px; font-weight: 600; color: #111827; flex: 1; }
+  .d6-tank-area { display: flex; flex-direction: column; gap: 12px; }
+  .d6-tank {
+    border: 5px solid #22c55e; border-radius: 12px;
+    background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 10px; padding: 16px; transition: all 0.3s;
+  }
+  .d6-tank.conflict { border-color: #ef4444; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); }
+  .d6-tank-fish { font-size: 34px; }
+  .d6-status-bar { display: flex; align-items: center; gap: 8px; }
+  .d6-status-dot { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; flex-shrink: 0; transition: background 0.3s; }
+  .d6-status-dot.conflict { background: #ef4444; }
+  .d6-status-text { font-size: 13px; font-weight: 600; color: #111827; }
+  .d6-bioload-row { display: flex; align-items: center; gap: 8px; }
+  .d6-bioload-track { flex: 1; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; }
+  .d6-bioload-fill { height: 100%; border-radius: 3px; background: #22c55e; width: 23%; transition: all 0.3s; }
+  .d6-compat-list { display: flex; flex-direction: column; gap: 8px; }
+  .d6-compat-ok { color: #16a34a; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+  .d6-warning {
+    background: #fff; border: 1.5px solid #fca5a5; border-radius: 8px; padding: 10px 12px;
+  }
+  .d6-warning-header { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .d6-warning-dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; }
+  .d6-warning-label { font-size: 11px; font-weight: 700; color: #ef4444; text-transform: uppercase; }
+  .d6-warning-pair { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 2px; }
+  .d6-warning-reason { font-size: 12px; color: #6b7280; line-height: 1.5; }
+
+  /* ── State Management ── */
+  [data-state="conflict"] .tank-canvas,
+  [data-state="conflict"] .d2-tank-visual,
+  [data-state="conflict"] .d4-tank,
+  [data-state="conflict"] .d5-tank,
+  [data-state="conflict"] .d6-tank { border-color: var(--c-danger) !important; }
+  [data-state="conflict"] .d3-tank { border-color: #ef4444 !important; }
+
+  .compat-ok, .d3-compat-ok, .d4-compat-ok, .d5-compat-empty, .d6-compat-ok { display: flex; }
+  .warnings-group, .d3-warnings, .d4-warnings, .d5-warnings, .d6-warnings { display: none; }
+
+  [data-state="conflict"] .compat-ok,
+  [data-state="conflict"] .d3-compat-ok,
+  [data-state="conflict"] .d4-compat-ok,
+  [data-state="conflict"] .d5-compat-empty,
+  [data-state="conflict"] .d6-compat-ok { display: none; }
+
+  [data-state="conflict"] .warnings-group,
+  [data-state="conflict"] .d3-warnings,
+  [data-state="conflict"] .d4-warnings,
+  [data-state="conflict"] .d5-warnings,
+  [data-state="conflict"] .d6-warnings { display: block; }
+</style>
+</head>
+<body>
+
+<div class="shell-header">
+  <div>
+    <div class="shell-title">🐟 AquaWiki — Design Directions</div>
+    <div class="shell-sub">6 visual directions cho Simulator page · Click tab để so sánh</div>
+  </div>
+  <div class="dir-tabs">
+    <button class="dir-tab active" onclick="showDir(1, this)">1. Aqua Clean</button>
+    <button class="dir-tab" onclick="showDir(2, this)">2. Card Gallery</button>
+    <button class="dir-tab" onclick="showDir(3, this)">3. Dark Pro</button>
+    <button class="dir-tab" onclick="showDir(4, this)">4. Warm Earth</button>
+    <button class="dir-tab" onclick="showDir(5, this)">5. Mobile Native</button>
+    <button class="dir-tab" onclick="showDir(6, this)">6. Split Panel</button>
+  </div>
+</div>
+
+<div class="directions-container">
+
+  <!-- State Toggle -->
+  <div class="state-toggle">
+    <span class="state-label">Trạng thái bể:</span>
+    <button class="state-btn active-green" id="btn-safe" onclick="setState('safe')">✅ Không có xung đột</button>
+    <button class="state-btn" id="btn-conflict" onclick="setState('conflict')">🔴 Có xung đột (Betta + Guppy)</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- DIRECTION 1: Aqua Clean                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="direction active" id="dir-1" data-state="safe">
+    <div class="dir-label">Direction 1 — Aqua Clean · Light · Minimal · Trustworthy</div>
+    <div class="d1">
+      <!-- Nav -->
+      <div class="d1-nav">
+        <div class="d1-logo"><span class="d1-logo-icon">🐠</span> AquaWiki</div>
+        <div class="d1-navlinks">
+          <a class="d1-navlink active-nav">Simulator</a>
+          <a class="d1-navlink">Bách khoa</a>
+          <a class="d1-navlink">Đăng nhập</a>
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="d1-body">
+        <!-- Left -->
+        <div class="d1-left">
+          <div>
+            <div class="section-title">Kích thước bể</div>
+            <div class="dim-row">
+              <div class="dim-group"><div class="dim-label">Dài (cm)</div><input class="dim-input" value="60" type="number"></div>
+              <div class="dim-group"><div class="dim-label">Rộng (cm)</div><input class="dim-input" value="30" type="number"></div>
+              <div class="dim-group"><div class="dim-label">Cao (cm)</div><input class="dim-input" value="35" type="number"></div>
+            </div>
+            <div class="dim-result">Thể tích: <strong>63 lít</strong></div>
+          </div>
+          <div>
+            <div class="section-title">Thêm loài</div>
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" placeholder="Tìm loài cá...">
+            </div>
+          </div>
+          <div>
+            <div class="section-title">Loài trong bể</div>
+            <div class="species-list">
+              <div class="species-card">
+                <span class="species-icon">🐟</span>
+                <div class="species-info">
+                  <div class="species-name">Cá Xiêm</div>
+                  <div class="species-sci">Betta splendens</div>
+                </div>
+                <span class="behavior-chip chip-aggressive">HUNG DỮ</span>
+                <button class="remove-btn">×</button>
+              </div>
+              <div class="species-card">
+                <span class="species-icon">🐠</span>
+                <div class="species-info">
+                  <div class="species-name">Cá Guppy</div>
+                  <div class="species-sci">Poecilia reticulata</div>
+                </div>
+                <span class="behavior-chip chip-peaceful">HIỀN</span>
+                <button class="remove-btn">×</button>
+              </div>
+              <div class="species-card">
+                <span class="species-icon">🐡</span>
+                <div class="species-info">
+                  <div class="species-name">Cá Neon Tetra</div>
+                  <div class="species-sci">Paracheirodon innesi</div>
+                </div>
+                <span class="behavior-chip chip-peaceful">HIỀN</span>
+                <button class="remove-btn">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right -->
+        <div class="d1-right">
+          <div>
+            <div class="section-title">Hình ảnh bể</div>
+            <div class="tank-canvas" id="d1-tank">
+              <div class="tank-icons">
+                <span class="tank-fish">🐟</span>
+                <span class="tank-fish">🐠</span>
+                <span class="tank-fish">🐡</span>
+              </div>
+            </div>
+          </div>
+          <div class="bioload-section">
+            <div class="bioload-header">
+              <span class="bioload-label">💧 Mật độ sinh học</span>
+              <span class="bioload-pct">23%</span>
+            </div>
+            <div class="bioload-bar"><div class="bioload-fill" style="width:23%"></div></div>
+          </div>
+          <div class="compat-panel">
+            <div class="compat-panel-header">⚡ Tương thích</div>
+            <div class="compat-panel-body">
+              <div class="compat-ok">✅ Không có xung đột tương thích</div>
+              <div class="warnings-group">
+                <div class="warning-card">
+                  <div class="warning-severity high">🔴 RỦI RO CAO</div>
+                  <div class="warning-pair">Cá Xiêm + Cá Guppy</div>
+                  <div class="warning-reason">Betta có tính lãnh thổ với các loài cá có vây dài và màu sắc tương tự.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- DIRECTION 2: Card Gallery                      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="direction" id="dir-2" data-state="safe">
+    <div class="dir-label">Direction 2 — Card Gallery · Visual · Interactive · Browse-first</div>
+    <div class="d2">
+      <div class="d2-nav">
+        <div class="d2-logo">🐠 AquaWiki</div>
+        <div class="d2-navlinks">
+          <a class="d2-navlink active-nav">Simulator</a>
+          <a class="d2-navlink">Bách khoa</a>
+          <a class="d2-navlink">Đăng nhập</a>
+        </div>
+      </div>
+      <div class="d2-body">
+        <div class="d2-main">
+          <div class="d2-page-title">Lên kế hoạch cho bể của bạn</div>
+          <div class="d2-page-sub">Chọn loài cá, xem cảnh báo tương thích ngay lập tức</div>
+          <div class="d2-dim-card">
+            <div class="d2-dim-row">
+              <div class="d2-dim-item"><div class="d2-dim-label">Dài</div><div class="d2-dim-val">60</div><div class="d2-dim-unit">cm</div></div>
+              <div class="d2-dim-item"><div class="d2-dim-label">Rộng</div><div class="d2-dim-val">30</div><div class="d2-dim-unit">cm</div></div>
+              <div class="d2-dim-item"><div class="d2-dim-label">Cao</div><div class="d2-dim-val">35</div><div class="d2-dim-unit">cm</div></div>
+            </div>
+            <div class="d2-vol">Thể tích: <strong>63 lít</strong> · Bioload: 23% (Tốt)</div>
+          </div>
+          <div class="d2-species-grid">
+            <div class="d2-species-card in-tank">
+              <div class="d2-fish-icon">🐟</div>
+              <div class="d2-fish-name">Cá Xiêm</div>
+              <div class="d2-fish-chip"><span class="behavior-chip chip-aggressive">HUNG DỮ</span></div>
+            </div>
+            <div class="d2-species-card in-tank">
+              <div class="d2-fish-icon">🐠</div>
+              <div class="d2-fish-name">Cá Guppy</div>
+              <div class="d2-fish-chip"><span class="behavior-chip chip-peaceful">HIỀN</span></div>
+            </div>
+            <div class="d2-species-card in-tank">
+              <div class="d2-fish-icon">🐡</div>
+              <div class="d2-fish-name">Neon Tetra</div>
+              <div class="d2-fish-chip"><span class="behavior-chip chip-peaceful">HIỀN</span></div>
+            </div>
+            <div class="d2-species-card">
+              <div class="d2-fish-icon">🦈</div>
+              <div class="d2-fish-name">Cá Cory</div>
+              <div class="d2-fish-chip"><span class="behavior-chip chip-peaceful">HIỀN</span></div>
+            </div>
+            <div class="d2-species-card">
+              <div class="d2-fish-icon">🐬</div>
+              <div class="d2-fish-name">Molly</div>
+              <div class="d2-fish-chip"><span class="behavior-chip chip-semi">TRUNG TÍNH</span></div>
+            </div>
+            <div class="d2-species-card">
+              <div class="d2-fish-icon">🐙</div>
+              <div class="d2-fish-name">Otocinclus</div>
+              <div class="d2-fish-chip"><span class="behavior-chip chip-peaceful">HIỀN</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="d2-sidebar">
+          <div>
+            <div class="section-title">Hình ảnh bể</div>
+            <div class="d2-tank-visual" id="d2-tank">🐟 🐠 🐡</div>
+          </div>
+          <div class="compat-panel" style="flex:1">
+            <div class="compat-panel-header">⚡ Tương thích</div>
+            <div class="compat-panel-body">
+              <div class="compat-ok">✅ Không có xung đột</div>
+              <div class="warnings-group">
+                <div class="warning-card">
+                  <div class="warning-severity high">🔴 RỦI RO CAO</div>
+                  <div class="warning-pair">Cá Xiêm + Cá Guppy</div>
+                  <div class="warning-reason">Betta có tính lãnh thổ với loài có vây dài.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- DIRECTION 3: Dark Pro                          -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="direction" id="dir-3" data-state="safe">
+    <div class="dir-label">Direction 3 — Dark Pro · Dense · Data-forward · Power users</div>
+    <div class="d3">
+      <div class="d3-nav">
+        <div class="d3-logo">🐠 AquaWiki</div>
+        <div class="d3-navlinks">
+          <a class="d3-navlink active-nav">Simulator</a>
+          <a class="d3-navlink">Bách khoa</a>
+          <a class="d3-navlink">Admin</a>
+        </div>
+      </div>
+      <div class="d3-body">
+        <div class="d3-sidebar">
+          <div class="d3-sidebar-title">Kích thước bể</div>
+          <div class="d3-input-group"><div class="d3-input-label">Dài (cm)</div><input class="d3-input" value="60"></div>
+          <div class="d3-input-group"><div class="d3-input-label">Rộng (cm)</div><input class="d3-input" value="30"></div>
+          <div class="d3-input-group"><div class="d3-input-label">Cao (cm)</div><input class="d3-input" value="35"></div>
+          <div class="d3-stat-row">
+            <div class="d3-stat"><div class="d3-stat-val">63L</div><div class="d3-stat-label">Thể tích</div></div>
+            <div class="d3-stat"><div class="d3-stat-val">23%</div><div class="d3-stat-label">Bioload</div></div>
+          </div>
+          <div class="d3-stat-row">
+            <div class="d3-stat"><div class="d3-stat-val">3</div><div class="d3-stat-label">Loài</div></div>
+            <div class="d3-stat" id="d3-conflict-stat"><div class="d3-stat-val" style="color:#22c55e">0</div><div class="d3-stat-label">Xung đột</div></div>
+          </div>
+        </div>
+        <div class="d3-main">
+          <div class="d3-tank" id="d3-tank">
+            <span class="d3-tank-fish">🐟</span>
+            <span class="d3-tank-fish">🐠</span>
+            <span class="d3-tank-fish">🐡</span>
+          </div>
+          <div class="d3-bioload">
+            <div class="d3-bioload-label"><span>Mật độ sinh học</span><span>23%</span></div>
+            <div class="d3-bioload-bar"><div class="d3-bioload-fill" id="d3-bioload" style="width:23%"></div></div>
+          </div>
+        </div>
+        <div class="d3-right">
+          <div class="d3-panel-title">Loài trong bể</div>
+          <div class="d3-search">
+            <span style="color:#64748b">🔍</span>
+            <input placeholder="Tìm loài...">
+          </div>
+          <div class="d3-species-list">
+            <div class="d3-species-row"><span style="font-size:18px">🐟</span><span class="d3-species-name">Cá Xiêm</span><span class="behavior-chip chip-aggressive" style="font-size:10px">HUNG</span><button class="d3-remove">×</button></div>
+            <div class="d3-species-row"><span style="font-size:18px">🐠</span><span class="d3-species-name">Cá Guppy</span><span class="behavior-chip chip-peaceful" style="font-size:10px">HIỀN</span><button class="d3-remove">×</button></div>
+            <div class="d3-species-row"><span style="font-size:18px">🐡</span><span class="d3-species-name">Neon Tetra</span><span class="behavior-chip chip-peaceful" style="font-size:10px">HIỀN</span><button class="d3-remove">×</button></div>
+          </div>
+          <div class="d3-panel-title">Tương thích</div>
+          <div class="d3-compat-section">
+            <div class="d3-compat-ok">✅ Không có xung đột</div>
+            <div class="d3-warnings">
+              <div class="d3-warning">
+                <div class="d3-warning-title">🔴 RỦI RO CAO · Cá Xiêm + Cá Guppy</div>
+                <div class="d3-warning-text">Betta có tính lãnh thổ với loài có vây dài và màu sắc sặc sỡ.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- DIRECTION 4: Warm Earth                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="direction" id="dir-4" data-state="safe">
+    <div class="dir-label">Direction 4 — Warm Earth · Organic · Natural · Friendly</div>
+    <div class="d4">
+      <div class="d4-nav">
+        <div class="d4-logo">🌿 AquaWiki</div>
+        <div class="d4-navlinks">
+          <a class="d4-navlink active-nav">Simulator</a>
+          <a class="d4-navlink">Bách khoa</a>
+          <a class="d4-navlink">Đăng nhập</a>
+        </div>
+      </div>
+      <div class="d4-body">
+        <div class="d4-left">
+          <div class="d4-page-title">Lên kế hoạch bể cá</div>
+          <div>
+            <div class="d4-section-label">Kích thước bể</div>
+            <div class="d4-dim-grid">
+              <div class="d4-dim-box"><div class="d4-dim-label">Dài (cm)</div><input class="d4-dim-input" value="60"></div>
+              <div class="d4-dim-box"><div class="d4-dim-label">Rộng (cm)</div><input class="d4-dim-input" value="30"></div>
+              <div class="d4-dim-box"><div class="d4-dim-label">Cao (cm)</div><input class="d4-dim-input" value="35"></div>
+            </div>
+            <div class="dim-result" style="margin-top:8px">Thể tích: <strong style="color:#2d6a4f">63 lít</strong></div>
+          </div>
+          <div>
+            <div class="d4-section-label">Thêm loài</div>
+            <div class="d4-search-wrap">
+              <span class="d4-search-icon">🔍</span>
+              <input class="d4-search" placeholder="Tìm loài cá...">
+            </div>
+          </div>
+          <div>
+            <div class="d4-section-label">Loài trong bể</div>
+            <div class="d4-species-list">
+              <div class="d4-species-card">
+                <span class="d4-fish">🐟</span>
+                <div class="d4-fish-info"><div class="d4-fish-name">Cá Xiêm</div><div class="d4-fish-sci">Betta splendens</div></div>
+                <span class="behavior-chip chip-aggressive">HUNG DỮ</span>
+              </div>
+              <div class="d4-species-card">
+                <span class="d4-fish">🐠</span>
+                <div class="d4-fish-info"><div class="d4-fish-name">Cá Guppy</div><div class="d4-fish-sci">Poecilia reticulata</div></div>
+                <span class="behavior-chip chip-peaceful">HIỀN</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d4-right">
+          <div class="d4-tank" id="d4-tank">
+            <span class="d4-tank-fish">🐟</span>
+            <span class="d4-tank-fish">🐠</span>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;color:#78716c;margin-bottom:4px"><span>🌊 Mật độ sinh học</span><span style="font-weight:600;color:#1c1917">23%</span></div>
+            <div class="d4-bioload-bar"><div class="d4-bioload-fill"></div></div>
+          </div>
+          <div class="d4-compat-panel">
+            <div style="font-size:13px;font-weight:600;color:#78716c;margin-bottom:10px">⚡ Tương thích loài</div>
+            <div class="d4-compat-ok">✅ Không có xung đột tương thích</div>
+            <div class="d4-warnings">
+              <div class="d4-warning">
+                <div class="d4-warning-title">RỦI RO CAO</div>
+                <div class="d4-warning-pair">Cá Xiêm + Cá Guppy</div>
+                <div class="d4-warning-reason">Betta có tính lãnh thổ với các loài cá có vây dài và màu sắc tương tự.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- DIRECTION 5: Mobile Native                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="direction" id="dir-5" data-state="safe">
+    <div class="dir-label">Direction 5 — Mobile Native · 375px · Touch-first · Single column</div>
+    <div class="d5-wrapper">
+      <div class="d5">
+        <div class="d5-nav">
+          <div class="d5-logo">🐠 AquaWiki</div>
+          <span style="font-size:20px">☰</span>
+        </div>
+        <div class="d5-body">
+          <div class="d5-section">
+            <div class="d5-section-title">📐 Kích thước bể</div>
+            <div class="d5-dim-grid">
+              <div class="d5-dim-item"><div class="d5-dim-label">Dài (cm)</div><input class="d5-dim-input" value="60"></div>
+              <div class="d5-dim-item"><div class="d5-dim-label">Rộng (cm)</div><input class="d5-dim-input" value="30"></div>
+              <div class="d5-dim-item"><div class="d5-dim-label">Cao (cm)</div><input class="d5-dim-input" value="35"></div>
+              <div class="d5-dim-item"><div class="d5-dim-label">Thể tích</div><div style="padding:10px;font-size:16px;font-weight:700;color:var(--c-primary)">63 L</div></div>
+            </div>
+          </div>
+          <div class="d5-section">
+            <div class="d5-section-title">🐟 Hình ảnh bể</div>
+            <div class="d5-tank" id="d5-tank">
+              <span class="d5-tank-fish">🐟</span>
+              <span class="d5-tank-fish">🐠</span>
+            </div>
+            <div style="margin-top:10px">
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--c-text-2);margin-bottom:4px"><span>Mật độ sinh học</span><span style="font-weight:600;color:var(--c-text)">23%</span></div>
+              <div class="d5-bioload"><div class="d5-bioload-bar"><div class="d5-bioload-fill"></div></div><div class="d5-bioload-pct">Tốt</div></div>
+            </div>
+          </div>
+          <div class="d5-section">
+            <div class="d5-section-title">🔍 Thêm loài</div>
+            <div class="d5-search"><span>🔍</span><input placeholder="Tìm loài cá..."></div>
+          </div>
+          <div class="d5-section">
+            <div class="d5-section-title">🐠 Loài trong bể</div>
+            <div class="d5-species-list">
+              <div class="d5-species-card"><span class="d5-fish">🐟</span><span class="d5-fish-name">Cá Xiêm</span><span class="behavior-chip chip-aggressive">HUNG DỮ</span></div>
+              <div class="d5-species-card"><span class="d5-fish">🐠</span><span class="d5-fish-name">Cá Guppy</span><span class="behavior-chip chip-peaceful">HIỀN</span></div>
+            </div>
+          </div>
+          <div class="d5-section">
+            <div class="d5-section-title">⚡ Tương thích</div>
+            <div class="d5-compat-empty">✅ Không có xung đột</div>
+            <div class="d5-warnings">
+              <div class="d5-warning">
+                <div class="d5-warning-badge">🔴 RỦI RO CAO</div>
+                <div class="d5-warning-pair">Cá Xiêm + Cá Guppy</div>
+                <div class="d5-warning-reason">Betta có tính lãnh thổ với loài có vây dài.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- DIRECTION 6: Split Panel                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="direction" id="dir-6" data-state="safe">
+    <div class="dir-label">Direction 6 — Split Panel · Focused · Clean separation · Information hierarchy</div>
+    <div class="d6">
+      <div class="d6-nav">
+        <div class="d6-logo">🐠 AquaWiki</div>
+        <div class="d6-navlinks">
+          <a class="d6-navlink active-nav">Simulator</a>
+          <a class="d6-navlink">Bách khoa</a>
+          <a class="d6-navlink">Đăng nhập</a>
+        </div>
+      </div>
+      <div class="d6-body">
+        <div class="d6-panel-l">
+          <div class="d6-panel-title">Thiết lập bể</div>
+          <div>
+            <div class="d6-dim-row">
+              <div class="d6-dim-item"><div class="d6-dim-label">DÀI (cm)</div><input class="d6-dim-input" value="60"></div>
+              <div class="d6-dim-item"><div class="d6-dim-label">RỘNG (cm)</div><input class="d6-dim-input" value="30"></div>
+              <div class="d6-dim-item"><div class="d6-dim-label">CAO (cm)</div><input class="d6-dim-input" value="35"></div>
+            </div>
+            <div class="d6-vol">Thể tích: <strong>63 lít</strong></div>
+          </div>
+          <div class="d6-search"><span style="color:#9ca3af">🔍</span><input placeholder="Tìm và thêm loài cá..."></div>
+          <div class="d6-species-list">
+            <div class="d6-species-row"><span class="d6-fish">🐟</span><span class="d6-fish-name">Cá Xiêm</span><span class="behavior-chip chip-aggressive">HUNG DỮ</span></div>
+            <div class="d6-species-row"><span class="d6-fish">🐠</span><span class="d6-fish-name">Cá Guppy</span><span class="behavior-chip chip-peaceful">HIỀN</span></div>
+            <div class="d6-species-row"><span class="d6-fish">🐡</span><span class="d6-fish-name">Neon Tetra</span><span class="behavior-chip chip-peaceful">HIỀN</span></div>
+          </div>
+        </div>
+        <div class="d6-panel-r">
+          <div class="d6-panel-title">Trạng thái bể</div>
+          <div class="d6-tank-area">
+            <div class="d6-tank" id="d6-tank">
+              <span class="d6-tank-fish">🐟</span>
+              <span class="d6-tank-fish">🐠</span>
+              <span class="d6-tank-fish">🐡</span>
+            </div>
+            <div class="d6-status-bar">
+              <div class="d6-status-dot" id="d6-dot"></div>
+              <span class="d6-status-text" id="d6-status-text">Bể ổn định — không có xung đột</span>
+            </div>
+            <div class="d6-bioload-row">
+              <span style="font-size:12px;color:#6b7280;min-width:60px">Bioload</span>
+              <div class="d6-bioload-track"><div class="d6-bioload-fill"></div></div>
+              <span style="font-size:12px;font-weight:600;color:#111827;min-width:36px">23%</span>
+            </div>
+          </div>
+          <div>
+            <div class="d6-panel-title">Phân tích tương thích</div>
+            <div class="d6-compat-list">
+              <div class="d6-compat-ok">✅ Tất cả các loài tương thích tốt với nhau</div>
+              <div class="d6-warnings">
+                <div class="d6-warning">
+                  <div class="d6-warning-header"><div class="d6-warning-dot"></div><div class="d6-warning-label">RỦI RO CAO</div></div>
+                  <div class="d6-warning-pair">Cá Xiêm + Cá Guppy</div>
+                  <div class="d6-warning-reason">Betta có tính lãnh thổ với các loài cá có vây dài và màu sắc sặc sỡ tương tự.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showDir(n, btn) {
+    document.querySelectorAll('.direction').forEach(d => d.classList.remove('active'));
+    document.querySelectorAll('.dir-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('dir-' + n).classList.add('active');
+    btn.classList.add('active');
+    // sync state
+    const current = document.querySelector('.state-btn.active-red') ? 'conflict' : 'safe';
+    setState(current);
+  }
+
+  function setState(state) {
+    const allDirs = document.querySelectorAll('.direction');
+    allDirs.forEach(d => d.setAttribute('data-state', state));
+
+    const btnSafe = document.getElementById('btn-safe');
+    const btnConflict = document.getElementById('btn-conflict');
+
+    if (state === 'conflict') {
+      btnSafe.className = 'state-btn';
+      btnConflict.className = 'state-btn active-red';
+      // D6 extra
+      const dot = document.getElementById('d6-dot');
+      const st = document.getElementById('d6-status-text');
+      if (dot) { dot.classList.add('conflict'); st.textContent = 'Cảnh báo — phát hiện xung đột!'; }
+    } else {
+      btnSafe.className = 'state-btn active-green';
+      btnConflict.className = 'state-btn';
+      const dot = document.getElementById('d6-dot');
+      const st = document.getElementById('d6-status-text');
+      if (dot) { dot.classList.remove('conflict'); st.textContent = 'Bể ổn định — không có xung đột'; }
+    }
+  }
+</script>
+</body>
+</html>

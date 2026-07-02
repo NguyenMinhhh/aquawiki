@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Be Vietnam Pro', 'Inter', system-ui, sans-serif;
+
+  /* Brand */
+  --color-primary: oklch(48% 0.17 222);
+  --color-primary-light: oklch(92% 0.06 222);
+  --color-primary-foreground: oklch(99% 0 0);
+
+  /* Semantic */
+  --color-success: oklch(52% 0.17 145);
+  --color-success-light: oklch(94% 0.06 145);
+  --color-warning: oklch(62% 0.16 75);
+  --color-warning-light: oklch(95% 0.06 75);
+  --color-danger: oklch(50% 0.20 25);
+  --color-danger-light: oklch(95% 0.05 25);
+
+  /* Surface */
+  --color-background: oklch(98% 0.005 222);
+  --color-surface: oklch(100% 0 0);
+  --color-border: oklch(88% 0.01 222);
+
+  /* Text — named "ink" for clean Tailwind utility names */
+  --color-ink: oklch(18% 0.01 222);
+  --color-ink-muted: oklch(45% 0.02 222);
+  --color-ink-disabled: oklch(70% 0.01 222);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .alert-enter {
+    animation: alert-enter 200ms ease-out both;
+  }
+}
+
+@keyframes alert-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

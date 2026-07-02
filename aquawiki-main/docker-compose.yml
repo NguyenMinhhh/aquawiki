@@ -1,0 +1,21 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: aquawiki-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: aquawiki
+      MYSQL_USER: aquawiki
+      MYSQL_PASSWORD: aquawiki
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uaquawiki", "-paquawiki"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
