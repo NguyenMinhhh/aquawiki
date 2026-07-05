@@ -1,7 +1,7 @@
 ---
 type: sprint-change-proposal
 date: 2026-06-24
-author: Huylaiphu3
+author: NguyenMinhhh
 mode: batch
 status: draft
 triggeredBy: New feature request — water change reminders + AI fish identification
@@ -15,7 +15,7 @@ scopeClassification: major
 # Sprint Change Proposal — AquaWiki
 
 **Date:** 2026-06-24
-**Prepared by:** Correct Course (Dev) for Huylaiphu3
+**Prepared by:** Correct Course (Dev) for NguyenMinhhh
 **Mode:** Batch
 **Scope Classification:** **Major** (new functional requirements + new epics + new architecture decisions)
 
@@ -32,7 +32,7 @@ Two new product capabilities have been requested and prioritized **above** the p
 
 ### Context / How Discovered
 
-Requested directly by the product owner (Huylaiphu3) as the **new top priority**. The owner explicitly de-scoped the remaining Growth/Vision features (bookmarks, species comparison, save/load configs, equipment management, user management, system statistics, global search, unit converter, compatible-species suggestions) — these are **no longer planned** and should not block or compete with the two new features.
+Requested directly by the product owner (NguyenMinhhh) as the **new top priority**. The owner explicitly de-scoped the remaining Growth/Vision features (bookmarks, species comparison, save/load configs, equipment management, user management, system statistics, global search, unit converter, compatible-species suggestions) — these are **no longer planned** and should not block or compete with the two new features.
 
 ### Evidence / Findings from Artifact Review
 

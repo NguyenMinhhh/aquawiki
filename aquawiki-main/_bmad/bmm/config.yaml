@@ -9,7 +9,7 @@ implementation_artifacts: "{project-root}/_bmad-output/implementation-artifacts"
 project_knowledge: "{project-root}/docs"
 
 # Core Configuration Values
-user_name: Huylaiphu3
+user_name: NguyenMinhhh
 project_name: aquawiki
 communication_language: Vietnamese
 document_output_language: English

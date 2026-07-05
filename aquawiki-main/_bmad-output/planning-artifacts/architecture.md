@@ -17,7 +17,7 @@ inputDocuments:
   - docs/aquawiki-functional-spec.md
 workflowType: 'architecture'
 project_name: 'aquawiki'
-user_name: 'Huylaiphu3'
+user_name: 'NguyenMinhhh'
 date: '2026-05-15'
 ---
 

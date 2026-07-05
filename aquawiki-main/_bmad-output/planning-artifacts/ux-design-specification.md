@@ -21,13 +21,13 @@ inputDocuments:
   - _bmad-output/planning-artifacts/architecture.md
   - _bmad-output/planning-artifacts/epics.md
 project_name: 'aquawiki'
-user_name: 'Huylaiphu3'
+user_name: 'NguyenMinhhh'
 date: '2026-05-15'
 ---
 
 # UX Design Specification - AquaWiki
 
-**Author:** Huylaiphu3
+**Author:** NguyenMinhhh
 **Date:** 2026-05-15
 
 ---

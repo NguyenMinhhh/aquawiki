@@ -10,7 +10,7 @@ workflowType: 'research'
 research_type: 'technical'
 research_topic: 'AI Fish Species Identification from Photo (AquaWiki Story 7.0)'
 research_goals: 'Select a recognition provider (external vision API vs self-hosted classification model vs third-party fish-ID API) by accuracy, cost/image, latency, Vietnamese aquarium species coverage, and integration fit with Spring Boot 3.5.14 / Java 21 / MySQL 8; define the integration contract for the SpeciesRecognitionService abstraction.'
-user_name: 'Huylaiphu3'
+user_name: 'NguyenMinhhh'
 date: '2026-06-24'
 web_research_enabled: true
 source_verification: true
@@ -19,7 +19,7 @@ source_verification: true
 # Research Report: technical
 
 **Date:** 2026-06-24
-**Author:** Huylaiphu3
+**Author:** NguyenMinhhh
 **Research Type:** technical
 
 ---

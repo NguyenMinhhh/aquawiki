@@ -30,8 +30,6 @@ classification:
 ---
 
 # Product Requirements Document - AquaWiki
-
-**Author:** Huylaiphu3
 **Date:** 2026-05-14
 
 ## Executive Summary
